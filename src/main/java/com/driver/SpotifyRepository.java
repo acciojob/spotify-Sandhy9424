@@ -56,6 +56,7 @@ public class SpotifyRepository {
             if(x.getName().equals(artistName)){
                 b=true;
                 artist=x;
+                break;
             }
         }
         if(b==false) {
@@ -91,14 +92,13 @@ public class SpotifyRepository {
                 return song;
             }
         }
-        throw new Exception();
+        throw new Exception("Album does not exist");
     }
 
     public Playlist createPlaylistOnLength(String mobile, String title, int length) throws Exception {
         for (User x : users) {
             if (x.getMobile().equals(mobile)) {
                 Playlist playlist = new Playlist(title);
-                playlists.add(playlist);
                 if(userPlaylistMap.containsKey(x)){
                     userPlaylistMap.get(x).add(playlist);
                 }
@@ -113,6 +113,7 @@ public class SpotifyRepository {
                         songs1.add(s);
                     }
                 }
+                playlists.add(playlist);
                 playlistSongMap.put(playlist, songs1);
                 creatorPlaylistMap.put(x, playlist);
                 List<User> list = new ArrayList<>();
@@ -128,7 +129,6 @@ public class SpotifyRepository {
         for (User x : users) {
             if (x.getMobile().equals(mobile)) {
                 Playlist playlist = new Playlist(title);
-                playlists.add(playlist);
                 if(userPlaylistMap.containsKey(x)){
                     userPlaylistMap.get(x).add(playlist);
                 }
@@ -145,6 +145,7 @@ public class SpotifyRepository {
                         }
                     }
                 }
+                playlists.add(playlist);
                 playlistSongMap.put(playlist, songs1);
                 creatorPlaylistMap.put(x, playlist);
                 List<User> list = new ArrayList<>();
