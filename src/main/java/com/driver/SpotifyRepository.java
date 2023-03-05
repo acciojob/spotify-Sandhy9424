@@ -161,10 +161,11 @@ public class SpotifyRepository {
     public Playlist findPlaylist(String mobile, String playlistTitle) throws Exception {
         for (User u : users) {
             if (u.getMobile().equals(mobile)) {
-                for (Playlist x : userPlaylistMap.get(u)) {
+                for (Playlist x : playlists) {
                     if (x.getTitle().equals(playlistTitle)) {
-                        if (!creatorPlaylistMap.get(u).getTitle().equals(x.getTitle()) && !playlistListenerMap.get(x).contains(u)) {
-                           playlistListenerMap.get(x).add(u);
+                        if (creatorPlaylistMap.containsKey(u)&&userPlaylistMap.containsKey(x)&&!creatorPlaylistMap.get(u).getTitle().equals(x.getTitle()) && !playlistListenerMap.get(x).contains(u)) {
+                           userPlaylistMap.get(u).add(x);
+                            playlistListenerMap.get(x).add(u);
                             return x;
                         }
                     }
@@ -183,15 +184,21 @@ public class SpotifyRepository {
                         if (songLikeMap.containsKey(s)) {
                             if (!songLikeMap.get(s).contains(u)) {
                                 songLikeMap.get(s).add(u);
-                                s.setLikes(songLikeMap.get(s).size());
-                                findArtist(s).setLikes(s.getLikes());
+                            }
+                            s.setLikes(songLikeMap.get(s).size());
+                            Artist a=findArtist(s);
+                            if(a!=null) {
+                                a.setLikes(s.getLikes());
                             }
                         } else {
                             List<User> list = new ArrayList<>();
                             list.add(u);
                             songLikeMap.put(s, list);
                             s.setLikes(songLikeMap.get(s).size());
-                            findArtist(s).setLikes(s.getLikes());
+                            Artist a=findArtist(s);
+                            if(a!=null) {
+                                a.setLikes(s.getLikes());
+                            }
                         }
                         return s;
                     }
