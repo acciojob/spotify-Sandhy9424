@@ -167,8 +167,22 @@ public class SpotifyRepository {
                           return x;
                         }
                         else {
-                            userPlaylistMap.get(u).add(x);
-                            playlistListenerMap.get(x).add(u);
+                            if(userPlaylistMap.containsKey(u)) {
+                                userPlaylistMap.get(u).add(x);
+                            }
+                            else {
+                                List<Playlist>list=new ArrayList<>();
+                                list.add(x);
+                                userPlaylistMap.put(u,list);
+                            }
+                            if(playlistListenerMap.containsKey(x)) {
+                                playlistListenerMap.get(x).add(u);
+                            }
+                            else {
+                                List<User>list=new ArrayList<>();
+                                list.add(u);
+                                playlistListenerMap.put(x,list);
+                            }
                             return x;
                         }
                     }
@@ -184,22 +198,21 @@ public class SpotifyRepository {
             if (u.getMobile().equals(mobile)) {
                 for (Song s : songs) {
                     if (s.getTitle().equals(songTitle)) {
-                        int co=0;
                         if (songLikeMap.containsKey(s)) {
-                            if (!songLikeMap.get(s).contains(u)) {
-                                songLikeMap.get(s).add(u);
-                                co++;
+                            if (songLikeMap.get(s).contains(u)) {
+                                return s;
                             }
-                            s.setLikes(songLikeMap.get(s).size());
+                            s.setLikes(s.getLikes()+1);
+                            songLikeMap.get(s).add(u);
                             Artist a=findArtist(s);
                             if(a!=null) {
-                                a.setLikes(s.getLikes()+co);
+                                a.setLikes(s.getLikes()+1);
                             }
                         } else {
                             List<User> list = new ArrayList<>();
                             list.add(u);
+                            s.setLikes(s.getLikes()+1);
                             songLikeMap.put(s, list);
-                            s.setLikes(songLikeMap.get(s).size());
                             Artist a=findArtist(s);
                             if(a!=null) {
                                 a.setLikes(s.getLikes()+1);
