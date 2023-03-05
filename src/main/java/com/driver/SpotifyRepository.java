@@ -164,6 +164,7 @@ public class SpotifyRepository {
                 for (Playlist x : userPlaylistMap.get(u)) {
                     if (x.getTitle().equals(playlistTitle)) {
                         if (!creatorPlaylistMap.get(u).getTitle().equals(x.getTitle()) && !playlistListenerMap.get(x).contains(u)) {
+                           playlistListenerMap.get(x).add(u);
                             return x;
                         }
                     }

@@ -12,7 +12,7 @@ public class SpotifyController {
     SpotifyService spotifyService = new SpotifyService();
 
     @PostMapping("/add-user")
-    public String createUser(@RequestParam(name = "name") String name, String mobile){
+    public String createUser(@RequestParam(name = "name") String name, @RequestParam("m") String mobile){
         //create the user with given name and number
         spotifyService.createUser(name,mobile);
         return "Success";
