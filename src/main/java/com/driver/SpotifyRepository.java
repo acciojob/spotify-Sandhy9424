@@ -213,9 +213,9 @@ public class SpotifyRepository {
                             list.add(u);
                             s.setLikes(s.getLikes()+1);
                             songLikeMap.put(s, list);
-                            Artist a=findArtist(s);
-                            if(a!=null) {
-                                a.setLikes(s.getLikes()+1);
+                            Artist b=findArtist(s);
+                            if(b!=null) {
+                                b.setLikes(s.getLikes()+1);
                             }
                         }
                         return s;
