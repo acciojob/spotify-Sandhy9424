@@ -78,8 +78,8 @@ public class SpotifyRepository {
 
     public Song createSong(String title, String albumName, int length) throws Exception{
         for(Album x:albums){
-            if(x.getTitle().equals(title)){
-                Song song=new Song(albumName,length);
+            if(x.getTitle().equals(albumName)){
+                Song song=new Song(title,length);
                 songs.add(song);
                 if(albumSongMap.containsKey(x)) {
                     albumSongMap.get(x).add(song);
@@ -142,6 +142,7 @@ public class SpotifyRepository {
                     for (Song m : songs) {
                         if (s.equals(m.getTitle())) {
                             songs1.add(m);
+                            break;
                         }
                     }
                 }
